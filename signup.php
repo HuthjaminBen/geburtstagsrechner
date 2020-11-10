@@ -3,7 +3,7 @@ require "header.php";
 ?>
 
 <main>
-<h1>Account anlegen</h1>
+<h1>Neuen Account anlegen</h1>
 <?php
     if (isset($_GET['error'])) {
         if($GET['error'] == "emptyfield"){

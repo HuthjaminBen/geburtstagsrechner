@@ -1,13 +1,13 @@
 <?php
 if(isset($_POST['signup-submit'])) {
-
+//Datenbank einbinden
     require 'database.intern.php';
-
+// Daten aus der signup php werden übernommem
     $username = $_POST['name_user'];
     $email = $_POST['mail_user'];
     $password = $_POST['pwd_user'];
     $password_2 = $_POST['pwd_user_2'];
-
+// Diverse Checks
     if (empty($username) || empty($email) || empty($password) || empty($password_2)) {
         header("Location: ../signup.php?error=emptyfield&name_user=".$username."&mail_user=".$email);
         exit();
@@ -51,7 +51,7 @@ if(isset($_POST['signup-submit'])) {
                     exit();
                 }
                 else {
-
+// hier endlich der insert
                     mysqli_stmt_bind_param($preparedstatement,"sss", $username, $email, $password);
                     mysqli_stmt_execute($preparedstatement);
                     header("Location: ../index.php?signup=successful");

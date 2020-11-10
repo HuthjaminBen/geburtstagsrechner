@@ -44,9 +44,8 @@ if(isset($_POST['login-submit'])){
 
     }
 
-
-
 }
+
 else {
     header("location: ../index.php?pleaselogin");
     exit();

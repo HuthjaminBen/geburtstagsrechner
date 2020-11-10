@@ -7,7 +7,7 @@ require "header.php";
         <section id="welcome">
             <h1>Willkommen auf dem Geburtstagsrechner</h1>
             <p> Der Geburtstagsrechner ermöglicht (in seiner letzten Ausbaustufe) <b>jeden Tag Geburtstag zu feiern</b>. <br />
-                Nach kostenloser Anmeldung können in einer Webmaske Geburtsdaten (nur das eigene oder auch die von FreundInnen, KollegInnen, MitbewohnerInnen... oder auch
+                Nach kostenloser Anmeldung können in einer Webmaske Geburtsdaten (das eigene oder auch die von FreundInnen, KollegInnen, MitbewohnerInnen... oder auch
                 Jahrestage) eingegeben werden. Ein Klick auf "Geburtstage berechnen" gibt dann verschiedene Feiergründe aus, die ihr zusammen, oder alleine erreicht habt.
             </p>
         </section>

@@ -10,7 +10,7 @@ session_start();
     <link rel="icon" href="favicon.ico" type="image/png" />
     <!--<script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/javascript.js" type="text/javascript"></script>-->
-    <title>Geburtstagsrechner - Ausbildungsprojekt</title>
+    <title>Geburtstagsrechner - ein Ausbildungsprojekt</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="title" content="IT Benjamin Huth" />
