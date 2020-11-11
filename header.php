@@ -1,10 +1,11 @@
 <?php
+// session wird hier, an erster stelle des angezeigten Dokumentes (header wird immer eingebungen) abgefragt
 session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
-
+<!-- +++++ DAS IST DER HTML-STANDARD-HEADER VON HTTPS://WWW.BENJAMIN-HUTH.DE +++++ -->
 <head>
     <link href="css/style.css" type="text/css" rel="stylesheet" />
     <link rel="icon" href="favicon.ico" type="image/png" />
@@ -161,15 +162,11 @@ session_start();
                     </ul>
                 </li>-->
             </ul>
-            <div>
-
-           
-               
-            </div>
         </nav>
+<!-- smartphone-navigation über CSS aktiviert und it JS ausgeführt-- !!!ACHTUNG!!! DERZEIT DEAKTIVIERT>
         <div id="smartphone">
             <a href="#bitte_scrollen">
                 <img src="bilder/menubutton.png">
             </a>
-        </div>
+        </div>-->
     </header>

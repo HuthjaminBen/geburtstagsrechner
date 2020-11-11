@@ -1,4 +1,5 @@
 <?php
+// einbinden der header.php in den Code (incl. sessionstart)
 require "header.php";
 ?>
 
@@ -13,14 +14,16 @@ require "header.php";
         </section>
         <section id="login">
             <?php
+            // gibt es eine aktive session? - dann diesen Code (HTML per php)
             if (isset($_SESSION['session_userid'])) {
                 echo '  <p> Hallo'.$_SESSION['session_username'].' !<br />
                              Du bist eingeloggt.</p> 
                         <div>
-                            <form action="birthdayinput.php" method="post">
-                                <p><input type="text" name="subj_name">Name</p>
-                                <p><input type="date" name="subj-datum">Datum</p>
-                                <p><button type="submit" name="birthday-submit">Datum eintragen</button>
+                            <form action="intern/dateinput.intern.php" method="post">
+                                <p><input type="text" name="subject_name">Name</p>
+                                <p><input type="date" name="subject_date">Datum</p>
+                                <p><input type="time" name="subject_time">Uhrzeit <sup>- Dieses Feld darf leer bleiben.</sup></p>
+                                <p><button type="submit" name="dateinput-submit">Datum eintragen</button>
                             </form>
                         </div>
                         <div>
@@ -39,6 +42,7 @@ require "header.php";
                             </form>
                         </div>';
                 }
+            // Keine aktive Session
             else {
                 echo '  <p> Du bist nicht eingeloggt</p>
                         <div>
@@ -52,15 +56,11 @@ require "header.php";
                 }
             ?>
         </section>
-    <div>
-        
-    
+    <div> 
     </div>
-   
-   
     </article>
 </main>
-
 <?php 
+//einbinden des footers
 require "footer.php";
 ?>

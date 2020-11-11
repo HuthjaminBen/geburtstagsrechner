@@ -1,10 +1,12 @@
 <?php
+//einbinden des Header (incl .Sessionstart)
 require "header.php";
 ?>
 
 <main>
 <h1>Neuen Account anlegen</h1>
 <?php
+// abfangen der Error-messages und anzeigen was der Fehler war wenn ein Versuch gescheitert ist
     if (isset($_GET['error'])) {
         if($GET['error'] == "emptyfield"){
             echo '<p class="errortext">Bitte alle Felder ausfüllen.</p>';
@@ -32,7 +34,7 @@ require "header.php";
         echo '<p class="successtext">Ein Nutzerkonto wurde erfolgreich erstellt.</p>';
     }  
 ?>
-
+<!-- DAs Feld zur Dateneingabe-->
 <form action="intern/signup.intern.php" method="post">
 <input type="text" name="name_user" placeholder="Benutzername">
 <input type="text" name="mail_user" placeholder="Email">
@@ -41,21 +43,9 @@ require "header.php";
 <button type="submit" name="signup-submit">Account anlegen</button>
 
 </form>
-
-   <!-- <h1>Willkommen auf dem Geburtstagsrechner</h1>
-    <p>
-        Der Geburtstagsrechner ermöglicht (in seiner letzten Ausbaustufe) <b>jeden Tag Geburtstag zu feiern</b>. In unten stehender Webmaske können Geburtsdaten (nur das eigene, oder auch die von FreundInnen, KollegInnen, MitbewohnerInnen... oder auch
-        Jahrestage) eingegeben werden. Ein Klick auf "Geburtstage berechnen" gibt dann verschiedene Feiergründe aus, die ihr zusammen, oder alleine erreicht habt.
-    </p>
-    <div>
-        <form action="eingetragen.php" method="post">
-            <p><input type="text" name="subj_name">Name</p>
-            <p><input type="date" name="subj-datum">Datum</p>
-            <p><button type="submit">Geburtstag berechnen</button>
-        </form>
-    </div>-->
 </main>
 
 <?php 
+// einbinden des footers
 require "footer.php";
 ?>
