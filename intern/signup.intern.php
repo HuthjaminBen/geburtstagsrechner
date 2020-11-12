@@ -8,6 +8,8 @@ if(isset($_POST['signup-submit'])) {
     $email = $_POST['mail_user'];
     $password = $_POST['pwd_user'];
     $password_2 = $_POST['pwd_user_2'];
+    // Erzeugen weiterer Variablen
+    $tablename = "tb_userdata_".$username;
     // Diverse Checks BEVOR es an die Datenbank geht *********
     // Sind alle Felder ausgefüllt
     if (empty($username) || empty($email) || empty($password) || empty($password_2)) {
@@ -75,9 +77,9 @@ if(isset($_POST['signup-submit'])) {
         mysqli_stmt_close($preparedstatement); 
         mysqli_stmt_close($prepared_statement);
         mysqli_close($db_connection);
+        }
     }
 
-}
 // das else vom allerersten if
 else {
     header("Location: ../signup.php?");

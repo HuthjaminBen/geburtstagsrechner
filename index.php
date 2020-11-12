@@ -20,7 +20,7 @@ require "header.php";
                              Du bist eingeloggt.</p> 
                         <div>
                             <form action="intern/dateinput.intern.php" method="post">
-                                <p><input type="text" name="subject_name">Name</p>
+                                <p><input type="text" name="subject_name">Name (nur Buchstaben und Ziffern)</p>
                                 <p><input type="date" name="subject_date">Datum</p>
                                 <p><input type="time" name="subject_time">Uhrzeit <sup>- Dieses Feld darf leer bleiben.</sup></p>
                                 <p><button type="submit" name="dateinput-submit">Datum eintragen</button>
