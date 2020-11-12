@@ -19,11 +19,6 @@ if(isset($_POST['dateinput-submit'])) {
     // erstellen weiterer Variablen
     $input_datetime = $input_date." ".$input_time;
 
-    // abfangen, falls es keine Zeiteingabe gab -> 8:30 ist statistisch in Deutschland die geburtenreichste Stunde / https://www.aerzteblatt.de/nachrichten/49618/Deutsche-Babys-kommen-meist-morgens-zur-Welt
-    if ($input_time == ''){
-        $input_time = '08:30';
-    }
-
     // Checks BEVOR es an die Datenbank geht *********
     // Sind alle Felder ausgefüllt
     if (empty($input_name) || empty($input_date)) {

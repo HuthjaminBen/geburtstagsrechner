@@ -8,6 +8,9 @@ if(isset($_POST['signup-submit'])) {
     $email = $_POST['mail_user'];
     $password = $_POST['pwd_user'];
     $password_2 = $_POST['pwd_user_2'];
+    $userbirthdate = $_POST['date_user'];
+    $userbirthtime = $_POST['time_user'];
+    $userbirthdatetime = $userbirthdate." ".$userbirthtime;          
     // Erzeugen weiterer Variablen
     $tablename = "tb_userdata_".$username;
     // Diverse Checks BEVOR es an die Datenbank geht *********
@@ -59,7 +62,7 @@ if(isset($_POST['signup-submit'])) {
 //Nutzer eintragen ****
             // nochmaliger SQL-check: läuft der Insert mit den Userdaten
             else {
-                $sql_insert ="INSERT INTO tb_users (users_name, users_email, users_password) VALUES (?, ?, ?)"; 
+                $sql_insert ="INSERT INTO tb_users (users_name, users_email, users_password, users_Birthdatetime) VALUES (?, ?, ?, ?)"; 
                 $preparedstatement = mysqli_stmt_init($db_connection);
                 if(!mysqli_stmt_prepare($preparedstatement, $sql_insert)) {
                     header("Location: ../signup.php?error=sql-error");
@@ -67,7 +70,7 @@ if(isset($_POST['signup-submit'])) {
                 }
                 else {
                 // hier endlich der insert
-                    mysqli_stmt_bind_param($preparedstatement,"sss", $username, $email, $password);
+                    mysqli_stmt_bind_param($preparedstatement,"ssss", $username, $email, $password, $userbirthdatetime);
                     mysqli_stmt_execute($preparedstatement);
                     header("Location: ../index.php?signup=successful");
                 }

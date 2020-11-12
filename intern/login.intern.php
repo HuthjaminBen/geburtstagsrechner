@@ -49,7 +49,7 @@ if(isset($_POST['login-submit'])){
         }
     }
 }
-// Rauswurf bei Versuch des Direktzugriffs auf die Datei (siehe ganz oben)
+// Rauswurf beim Versuch des Direktzugriffs auf die Datei (siehe ganz oben)
 else {
     header("location: ../index.php?pleaselogin");
     exit();
