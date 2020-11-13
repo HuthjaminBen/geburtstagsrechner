@@ -46,7 +46,7 @@ require "header.php";
                 <input type="password" name="pwd_user" placeholder="P@§$w0rt ;)">
                 <input type="password" name="pwd_user_2" placeholder="Wiederhole P@§$w0rt">
                 <input type="date" name="date_user">
-                <input type="time" name="time-user">
+                <input type="time" name="time_user">
                 <button type="submit" name="signup-submit">Account anlegen</button>
             </form>
         </section>
