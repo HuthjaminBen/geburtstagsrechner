@@ -10,6 +10,8 @@ if(isset($_POST['signup-submit'])) {
     $password_2 = $_POST['pwd_user_2'];
     $userbirthdate = $_POST['date_user'];
     $userbirthtime = $_POST['time_user'];
+    // ### OPTION ### hier eine FKT einfügen, die abfängt, wenn ein Datum, aber keine Uhrzeit eingegeben wird (8:30-Paradigma)
+
     $userbirthdatetime = $userbirthdate." ".$userbirthtime;          
     // Erzeugen weiterer Variablen
     $tablename = "tb_userdata_".$username;
@@ -44,7 +46,7 @@ if(isset($_POST['signup-submit'])) {
         $sql_select ="SELECT users_name FROM tb_users WHERE users_name=?";
         $prepared_statement = mysqli_stmt_init($db_connection);
         if(!mysqli_stmt_prepare($prepared_statement, $sql_select)) {
-            header("Location: ../signup.php?error=sql-error");
+            header("Location: ../signup.php?error=sql-select-error");
             exit();
         }
         // Abgleich der Nutereingegebenen Daten in SQL
@@ -62,10 +64,10 @@ if(isset($_POST['signup-submit'])) {
 //Nutzer eintragen ****
             // nochmaliger SQL-check: läuft der Insert mit den Userdaten
             else {
-                $sql_insert ="INSERT INTO tb_users (users_name, users_email, users_password, users_Birthdatetime) VALUES (?, ?, ?, ?)"; 
+                $sql_insert ="INSERT INTO tb_users (users_name, users_email, users_password, users_birthdatetime) VALUES (?, ?, ?, ?)"; 
                 $preparedstatement = mysqli_stmt_init($db_connection);
                 if(!mysqli_stmt_prepare($preparedstatement, $sql_insert)) {
-                    header("Location: ../signup.php?error=sql-error");
+                    header("Location: ../signup.php?error=sql-insert-error");
                     exit();
                 }
                 else {

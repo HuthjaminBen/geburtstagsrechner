@@ -34,7 +34,7 @@ if(isset($_POST['dateinput-submit'])) {
     // nun zur Datenbank **************************
     // einfügen der eingegebenen Werte in die tb_userdata
     else {
-            $sql_insert ="INSERT INTO tb_userdata (fk_userdates_user, userdates_name, userdates_datetime) VALUES (?, ?, ?)"; 
+            $sql_insert ="INSERT INTO tb_userdates (fk_userdates_user_id, userdates_name, userdates_datetime) VALUES (?, ?, ?)"; 
             $preparedstatement = mysqli_stmt_init($db_connection);
             if(!mysqli_stmt_prepare($preparedstatement, $sql_insert)) {
                 header("Location: ../index.php?error=sql-input-error");
@@ -44,10 +44,10 @@ if(isset($_POST['dateinput-submit'])) {
             // hier endlich der insert
                 mysqli_stmt_bind_param($preparedstatement,"sss", $input_userid, $input_name, $input_datetime);
                 mysqli_stmt_execute($preparedstatement);
-               // header("Location: ../index.php?signup=successful");
-               echo "datum".$input_date;
-               echo "zeit".$input_time;
-               echo "datzeit".$input_datetime;
+                header("Location: ../index.php?input=successful");
+               //echo "datum: ".$input_date;
+               //echo "zeit: ".$input_time;
+               //echo "datezeit: ".$input_datetime;
             }
         }
     
