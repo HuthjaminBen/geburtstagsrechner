@@ -44,7 +44,7 @@ if(isset($_POST['dateinput-submit'])) {
             // hier endlich der insert
                 mysqli_stmt_bind_param($preparedstatement,"sss", $input_userid, $input_name, $input_datetime);
                 mysqli_stmt_execute($preparedstatement);
-                header("Location: ../index.php?signup=successful");
+                header("Location: ../index.php?input=successful");
                //echo "datum: ".$input_date;
                //echo "zeit: ".$input_time;
                //echo "datezeit: ".$input_datetime;
