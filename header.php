@@ -163,10 +163,10 @@ session_start();
                 </li>-->
             </ul>
         </nav>
-<!-- smartphone-navigation über CSS aktiviert und it JS ausgeführt-- !!!ACHTUNG!!! DERZEIT DEAKTIVIERT>
+<!-- smartphone-navigation über CSS aktiviert und it JS ausgeführt-->
         <div id="smartphone">
             <a href="#bitte_scrollen">
                 <img src="bilder/menubutton.png">
             </a>
-        </div>-->
+        </div>
     </header>

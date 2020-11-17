@@ -1,6 +1,7 @@
 <?php
 // einbinden der header.php in den Code (incl. sessionstart)
 require "header.php";
+//include "intern/show.php";
 ?>
 
 <main>
@@ -16,32 +17,41 @@ require "header.php";
             <?php
             // gibt es eine aktive session? - dann diesen Code (HTML per php)
             if (isset($_SESSION['session_userid'])) {
-                echo '  <p> Hallo'.$_SESSION['session_username'].' !<br />
-                             Du bist eingeloggt.</p> 
-                        <div>
-                            <form action="intern/dateinput.intern.php" method="post">
-                                <p><input type="text" name="subject_name">Name (nur Buchstaben und Ziffern)</p>
-                                <p><input type="date" name="subject_date">Datum</p>
-                                <p><input type="time" name="subject_time">Uhrzeit <sup>- Dieses Feld darf leer bleiben.</sup></p>
-                                <p><button type="submit" name="dateinput-submit">Datum eintragen</button>
-                            </form>
-                        </div>
-                        <div>
-                            <form action="calculate.php" method="post">
-                                <p>><button type="submit" name="calculate-submit">Geburtstage berechnen</button></p>
-                            </form>
-                        </div>
-                        <div>
-                            <form action="show.php" method="post">
-                                <p><button type="submit" name="showall-submit">Alle eingetragenen Daten anzeigen</button></p>
-                            </form>
-                        </div>
-                        <div>
-                            <form action="intern/logout.intern.php" method="post">
-                                <button type="submit" name="logout-submit">Logout</button>
-                            </form>
-                        </div>';
-                }
+                echo '  <div class="flexcontainer">
+                            <div class="flexitem">
+                                <p> Hallo '.$_SESSION['session_username'].' !<br />
+                                    Du bist eingeloggt.
+                                </p> 
+                                <div>
+                                <p> Hier kannst Du Daten eintragen:</p>
+                                    <form action="intern/dateinput.intern.php" method="post">
+                                        <p><input type="text" name="subject_name">Name (nur Buchstaben und Ziffern)</p>
+                                        <p><input type="date" name="subject_date">Datum</p>
+                                        <p><input type="time" name="subject_time">Uhrzeit <sup>- Dieses Feld darf leer bleiben.</sup></p>
+                                        <p><button type="submit" name="dateinput-submit">Datum eintragen</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="flexitem">
+                                <div>
+                                    <form action="intern/calculate.addup.php" method="post">
+                                        <p><button type="submit" name="addup-submit">aufaddieren</button></p>
+                                    </form>
+                                </div>
+                                <div>
+                                    <form action="intern/show.intern.php" method="post">
+                                        <p><button type="submit" name="showall-submit">Alle eingetragenen Daten anzeigen</button></p>
+                                    </form>
+                                </div>
+                                <div>
+                                    <form action="intern/logout.intern.php" method="post">
+                                        <p><button type="submit" name="logout-submit">Logout</button></p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>'
+                ;
+            }
             // Keine aktive Session
             else {
                 echo '  <p> Du bist nicht eingeloggt</p>
