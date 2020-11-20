@@ -39,33 +39,87 @@ if(isset($_POST['addup-submit'])) {
 // Auch die errechneten Werte ind außerhalb der FKT nur zugänglich wenn sie ausgegeben wurden.
 
     // Funktion Berechnungen & Output
-    function simple_calculate_output ($name, /*$now, $UNIX_start_date,*/$UNIX_age_sek, $calculated_UNIX_age){
-   
-        $UNIX_age_min = floor($UNIX_age_sek/60);
-        $UNIX_sek_remainder = $UNIX_age_sek % 60; 
-        $UNIX_age_hrs = floor($UNIX_age_sek/60/60);
-        $UNIX_min_remainder = floor(($UNIX_age_sek / 60) %60);
-        $UNIX_age_day = floor($UNIX_age_sek/3600/24);
-        $UNIX_hrs_remainder = floor(($UNIX_age_sek / 3600) %24);
-        $UNIX_age_week = floor($UNIX_age_sek/86400/7);
-        $UNIX_days_remainder = floor(($UNIX_age_sek / 86400) %7);
-        $UNIX_age_month = floor($UNIX_age_sek/86400/30.4375);
-        $UNIX_age_year = floor($UNIX_age_sek/86400/365.25);
+    function simple_calculate_output ($now,$name,$UNIX_start_date,$UNIX_age_sek,$calculated_UNIX_age){
+        //einfache Berechnungen durch Division der UNIX-Timestamp-Sekunden
+        $UNIX_age_min = floor($UNIX_age_sek/60);                // =Minuten
+        $UNIX_sek_remainder = $UNIX_age_sek % 60;               // =restliche Sekunden
+        $UNIX_age_hrs = floor($UNIX_age_sek/60/60);             // =Stunden
+        $UNIX_min_remainder = floor(($UNIX_age_sek / 60) %60);  // =restliche Minuten
+        $UNIX_age_day = floor($UNIX_age_sek/3600/24);           // =Tage
+        $UNIX_hrs_remainder = floor(($UNIX_age_sek / 3600) %24);// =restliche Stunden
+        $UNIX_age_week = floor($UNIX_age_sek/86400/7);          // =Wochen
+        $UNIX_days_remainder = floor(($UNIX_age_sek / 86400) %7);//=restliche Tage
+        $UNIX_age_month = floor($UNIX_age_sek/86400/30.4375);   // =Monate
+        $UNIX_month_check = floor(($UNIX_age_sek/86400)%30.4375);//=restliche Tage
+        $UNIX_week_remainder = floor($UNIX_month_check/7);      // =restliche Wochen
+        $UNIX_age_year = floor($UNIX_age_sek/86400/365.25);     // =Jahre
+        $UNIX_year_check = floor(($UNIX_age_sek/86400)%365.25); // =restliche Tage
+        $UNIX_month_remainder = floor($UNIX_year_check/30.4375);// =restliche Monate
+        
+       
+
         // Addition der Alter
         $calculated_UNIX_age_for_output = $calculated_UNIX_age + $UNIX_age_sek;
         // die Ausgabe
         echo '<div class="flexitem">';
         echo "<h3>Name: ".$name."</h3><br>";
-        echo "<b>Gesamtalter jeweils in</b><br>
+        echo '<b>Gesamtalter jeweils in</b><br>
             <ul>
-                <li>Sekunden: ".$UNIX_age_sek."</li>
-                <li>Minuten: ".$UNIX_age_min." (und ".$UNIX_sek_remainder." Sekunden)</li>
-                <li>Stunden: ".$UNIX_age_hrs." (und ".$UNIX_min_remainder." Minuten)</li>
-                <li>Tagen: ".$UNIX_age_day." (und ".$UNIX_hrs_remainder." Stunden)</li>
-                <li>Wochen: ".$UNIX_age_week." (und ".$UNIX_days_remainder." Tage)</li>
-            </ul> 
-        <b>also genau:</b><br> ".floor($UNIX_age_week)." Wochen, ".$UNIX_days_remainder." Tage, ".$UNIX_hrs_remainder." Stunden, ".$UNIX_min_remainder." Minuten und ".$UNIX_sek_remainder." Sekunden. <br><br><br> ";
-        //echo "zwischengrößen: UNIX_age_month".$UNIX_age_month." UNIX_age_year: ".$UNIX_age_year." calculated_UNIX_age:".$calculated_UNIX_age." calculated_UNIX_age_for_output:".$calculated_UNIX_age_for_output."<br><br><br>"; 
+                <li>Sekunden: '.$UNIX_age_sek.'</li>
+                <li>Minuten: '.$UNIX_age_min.' (und '.$UNIX_sek_remainder.' Sekunden)</li>
+                <li>Stunden: '.$UNIX_age_hrs.' (und '.$UNIX_min_remainder.' Minuten)</li>
+                <li>Tagen: '.$UNIX_age_day.' (und '.$UNIX_hrs_remainder.' Stunden)</li>
+                <li>Wochen: '.$UNIX_age_week.' (und '.$UNIX_days_remainder.' Tage)</li>';
+       
+            // genauere Überprüfung der Monats und Jahresalter und deren Ausgabe
+            //date("z",$timestamp) gibt den Tag des Jahres aus
+            //date("j",timestamp) gibt den Tag des Monats an      
+            $daychecker_now_day_year = date('z',$now);
+            $daychecker_now_day_month = date('j',$now);
+
+            $daychecker_birth_day_year = date('z',$UNIX_start_date);
+            $daychecker_birth_day_month = date('j',$UNIX_start_date);
+            
+            $days_cause_of_month = $daychecker_now_day_month - $daychecker_birth_day_month;
+            $days_cause_of_month = $daychecker_now_day_year - $daychecker_birth_day_year;
+            if($daychecker_now_day_month==$daychecker_birth_day_month){
+                echo '
+                <li>Monate: <b>heute genau</b> '.$UNIX_age_month.' Monate. - Glückwunsch!</li>';
+            }  else if($daychecker_now_day_month > $daychecker_birth_day_month) {
+                echo '<li>Monate: '.$UNIX_age_month.' Monate (und '.$days_cause_of_month.'Tage)</li>';
+            }
+            else {         
+                echo '<li>Monate: '.$UNIX_age_month.' Monate (und '.$days_cause_of_month.'Tage)</li>';
+            }
+
+             //TODO: problem?: Jahreswechsel
+            if(($UNIX_year_check >= 363) || ($UNIX_year_check <= 3)) {
+                if($daychecker_now_day_year == $daychecker_birth_day_year) {
+                        echo '</ul>
+                        <p>Hat heute Geburtstag und wird '.date("H:i",$daychecker_birth).'Uhr '.$UNIX_age_year.'Jahre alt.</p> <br>
+                        <h2>Herzlichen Glückwunsch!</h2>'; 
+                }
+                else if($daychecker_now_day_year > $daychecker_birth_day_year) {
+                        echo '</ul>
+                        <p>Hatte vor '.$daychecker_now_day_year-$daychecker_birth_day_year. 'Tagen Geburtstag und wurde'.$UNIX_age_year.'Jahre alt. </p><br>
+                        <h2>Nachträglich alles Gute!</h2>'; 
+                }
+                else if($daychecker_now_day_year < $daychecker_birth_day_year) {
+                    echo '</ul>
+                    <p>Wird in '.$daychecker_birth_day_year-$daychecker_now_day_year.' Tagen '.$UNIX_age_year.'Jahre alt. </p><br>
+                    <h2>Schnell noch ein Geschenk besorgen!</h2><br>
+                    <p>- hier könnte Ihre Werbung stehen - <br>
+                    Hahahahahahahahahahahahahah </p>';
+                }
+                else {
+                    echo '<a href="mailto:fachinformatiker@benjamin-huth.de>REPORT BUG</a>';
+                }
+            }
+            else
+
+        echo "</ul>
+            <b>also genau:</b><br>".$UNIX_age_year." Jahre, ".$UNIX_month_remainder." Monate, ".$UNIX_week_remainder." Wochen, ".$UNIX_days_remainder." Tage, ".$UNIX_hrs_remainder." Stunden, ".$UNIX_min_remainder." Minuten und ".$UNIX_sek_remainder." Sekunden. <br><br><br> ";
+        
         echo "</div>";
         return $calculated_UNIX_age_for_output;
     }
@@ -83,14 +137,14 @@ if(isset($_POST['addup-submit'])) {
             $UNIX_start_date=strtotime($row["userdates_datetime"]);
             $name=$row["userdates_name"];
             $UNIX_age_sek = $now-$UNIX_start_date; 
-            $result=simple_calculate_output($name,$UNIX_age_sek,$calculated_UNIX_age);
+            $result=simple_calculate_output($now,$name,$UNIX_start_date,$UNIX_age_sek,$calculated_UNIX_age);
             //echo "<br>result= ".$result;
         }
         //echo "result außerhalb der while-schleife".$result;
         $UNIX_age_sek = $result;
         $name = "Alle Personen zusammen";
-        $result=simple_calculate_output($name,$UNIX_age_sek,$calculated_UNIX_age);
-               
+        $result=simple_calculate_output($now,$name,$UNIX_start_date,$UNIX_age_sek,$calculated_UNIX_age);   
+        //$now, $now,$name,$UNIX_start_date,$UNIX_age_sek,$calculated_UNIX_age
     } else {
         echo "Noch sind keine Daten vorhanden - Wenn Du gerade welche eingetragen hast 'Alle eingetragenen Daten anzeigen' drücken.";
     }
