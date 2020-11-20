@@ -151,7 +151,7 @@ if(isset($_POST['addup-submit'])) {
     mysqli_close($db_connection);
 ?>
             <form>
-                <button type=link href="javascript:history.back()">Zurück</button> 
+                <button type=link href="<?php header("Location: ../index.php?")?>">Zurück</button> 
             </form>
         </section>
     </article>
