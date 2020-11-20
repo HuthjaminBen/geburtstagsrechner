@@ -35,6 +35,7 @@ if(isset($_POST['signup-submit'])) {
         header("Location: ../signup.php?error=invalidmailadress&name_user=".$username);
         exit();
     }
+    // TODO: Passwortlänge
     // stimmen die beiden Passworte überein
     else if ($password_2 !== $password) {
         header("Location: ../signup.php?error=missmatchpasswords&name_user=".$username."&mail_user=".$email);
@@ -49,10 +50,10 @@ if(isset($_POST['signup-submit'])) {
             header("Location: ../signup.php?error=sql-select-error");
             exit();
         }
-        // Abgleich der Nutereingegebenen Daten in SQL
+        // Abgleich der Nutzereingegebenen Daten in SQL
         else{
             mysqli_stmt_bind_param($prepared_statement,"s", $username); 
-            // das "s" sorgt dafür, dass die Einabe als String gewertet wird - Schutz gegen SQL-injectons 
+            // das "s" sorgt dafür, dass die Einabe als String gewertet wird - Schutz gegen SQL-Injectons 
             mysqli_stmt_execute($prepared_statement);
             mysqli_stmt_store_result($prepared_statement);
             $check = mysqli_stmt_num_rows($prepared_statement);
@@ -64,7 +65,11 @@ if(isset($_POST['signup-submit'])) {
 //Nutzer eintragen ****
             // nochmaliger SQL-check: läuft der Insert mit den Userdaten
             else {
-                $sql_insert ="INSERT INTO tb_users (users_name, users_email, users_password, users_birthdatetime) VALUES (?, ?, ?, ?)"; 
+                $timestamp = time();
+                $pepper = hash(sha512,$timestamp);
+                $salt = "5al2_v0m".$timestamp."1n-der".$pepper."5uppe.";
+                $hashed_password = crypt($password,$salt);
+                $sql_insert ="INSERT INTO tb_users (users_name, users_salt, users_email, users_password, users_birthdatetime) VALUES (?, ?, ?, ?, ?)"; 
                 $preparedstatement = mysqli_stmt_init($db_connection);
                 if(!mysqli_stmt_prepare($preparedstatement, $sql_insert)) {
                     header("Location: ../signup.php?error=sql-insert-error");
@@ -72,7 +77,7 @@ if(isset($_POST['signup-submit'])) {
                 }
                 else {
                 // hier endlich der insert
-                    mysqli_stmt_bind_param($preparedstatement,"ssss", $username, $email, $password, $userbirthdatetime);
+                    mysqli_stmt_bind_param($preparedstatement,"sssss", $username, $salt, $email, $hashed_password, $userbirthdatetime);
                     mysqli_stmt_execute($preparedstatement);
                     header("Location: ../index.php?signup=successful");
                 }

@@ -26,8 +26,9 @@ if(isset($_POST['login-submit'])){
             mysqli_stmt_execute($statement);
             $result = mysqli_stmt_get_result($statement);
             if ($data_set = mysqli_fetch_assoc($result)){ // assoc macht die Einzeldaten der Zeile für PHP auslesbar
-               // $password_check = password_verify($password, $row['users_password']);
-                if ($data_set['users_password'] !== $password){ //derzeit noch ein PASSWORT IN KLARSCHRIFT in der Datenbank
+                $salt = $data_set['users_salt'];
+                $hashed_password = crypt($password,$salt);
+                if ($data_set['users_password'] !== $hashed_password){ 
                     header("location: ../index.php?error=wrongpassword");
                     exit();  
                 }

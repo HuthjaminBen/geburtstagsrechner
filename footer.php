@@ -6,4 +6,5 @@
         </h2>
     </footer>
 </body>
+<script src="js/javascriptphp.js" type="text/javascript"></script>
 </html>
